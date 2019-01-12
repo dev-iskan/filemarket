@@ -16,13 +16,13 @@
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Sales this month</p>
-                    <p class="title">0</p>
+                    <p class="title">$0</p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Lifetime sales</p>
-                    <p class="title">0</p>
+                    <p class="title">$0</p>
                 </div>
             </div>
         </div>

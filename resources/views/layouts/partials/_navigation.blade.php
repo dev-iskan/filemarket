@@ -24,7 +24,7 @@
                                                          document.getElementById('logout-form').submit();" class="button is-primary">
                             <strong>Log out</strong>
                         </a>
-                        <a class="button is-light">
+                        <a href="{{route('account.index')}}" class="button is-light">
                             Your profile
                         </a>
                         @else
