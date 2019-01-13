@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Account;
 use App\File;
 use App\Http\Requests\File\StoreFileRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\File\UpdateFileRequest;
+use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
@@ -43,6 +45,26 @@ class FileController extends Controller
         // Go to file index
         return redirect()->route('account.index')->withSuccess('Thanks,  submitted');
     }
+
+    public function edit (File $file) {
+        $this->authorize('touch', $file);
+        $approval = $file->approvals()->first();
+        return view('account.files.edit', compact('file', 'approval'));
+    }
+
+    public function update (UpdateFileRequest $request, File $file) {
+        $this->authorize('touch', $file);
+        $approvalProperties =$request->only(File::APPROVAL_PROPERTIES);
+        if ( $file->needsApproval($approvalProperties)) {
+           $file->createApproval($approvalProperties);
+           return back()->withSuccess('Thanks! We will review your changes soon.');
+        }
+
+        $file->update($request->only(['live', 'price']));
+
+        return back()->withSuccess('File Updated');
+    }
+
 
     public function createAndReturnSkeletonFile () {
         return auth()->user()->files()->create([

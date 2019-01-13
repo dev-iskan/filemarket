@@ -10,6 +10,10 @@ class File extends Model
 {
     use SoftDeletes;
 
+    protected $casts = [
+        'live' => 'boolean'
+    ];
+
     protected $fillable = [
        'overview',
        'overview_short',
@@ -20,9 +24,20 @@ class File extends Model
        'approved',
     ];
 
+    const APPROVAL_PROPERTIES = [
+        'title',
+        'overview_short',
+        'overview',
+    ];
+
     public function getRouteKeyName()
     {
         return 'identifier';
+    }
+
+    public function setLiveAttribute($value)
+    {
+        $this->attributes['live'] = (int) $value;
     }
 
     public function scopeFinished ($builder) {
@@ -44,5 +59,25 @@ class File extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function approvals () {
+        return  $this->hasMany(FileApproval::class);
+    }
+
+    public function needsApproval (array $approvalProperties) {
+        if ($this->currentPropertiesDifferToGiven($approvalProperties)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function currentPropertiesDifferToGiven (array $properties) {
+        return array_only($this->toArray(), self::APPROVAL_PROPERTIES) != $properties;
+    }
+
+    public function createApproval (array $approvalProperties)  {
+        $this->approvals()->create($approvalProperties);
     }
 }

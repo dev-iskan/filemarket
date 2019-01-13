@@ -24,5 +24,7 @@ Route::group(['prefix' => '/account', 'middleware'=> ['auth'],  'namespace' => '
         Route::get('/{file}/create', 'FileController@create')->name('account.files.create');
         Route::post('/{file}', 'FileController@store')->name('account.files.store');
         Route::get('/', 'FileController@index')->name('account.files.index');
+        Route::get('/{file}/edit', 'FileController@edit')->name('account.files.edit');
+        Route::patch('/{file}', 'FileController@update')->name('account.files.update');
     });
 });
