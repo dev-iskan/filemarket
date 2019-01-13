@@ -28,3 +28,7 @@ Route::group(['prefix' => '/account', 'middleware'=> ['auth'],  'namespace' => '
         Route::patch('/{file}', 'FileController@update')->name('account.files.update');
     });
 });
+
+
+Route::post('/{file}/upload', 'Upload\UploadController@store')->name('upload.store');
+Route::delete('/{file}/upload/{upload}', 'Upload\UploadController@destroy')->name('upload.destroy');

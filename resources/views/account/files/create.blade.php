@@ -4,6 +4,16 @@
     <h1 class="title">Sell a file</h1>
     <form action="{{route('account.files.store', $file)}}" method="post">
         @csrf
+
+        <div class="field">
+            <div id="file" class="dropzone"></div>
+            @if($errors->has('uploads'))
+                <p class="help is-danger">
+                    {{$errors->first('uploads')}}
+                </p>
+            @endif
+        </div>
+
         <div class="field">
             <label for="title" class="label">Title</label>
             <p class="control">
@@ -56,4 +66,9 @@
             <p>We'll review your file before it goes live.</p>
         </div>
     </form>
+@endsection
+
+
+@section('scripts')
+    @include('files.partials._file_upload_js')
 @endsection

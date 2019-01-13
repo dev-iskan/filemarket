@@ -8,5 +8,7 @@
         @include('layouts.partials._navigation')
         @yield('content')
     </div>
+
+    @yield('scripts')
 </body>
 </html>

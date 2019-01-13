@@ -12,6 +12,14 @@
         {{method_field('PATCH')}}
 
         <input type="hidden" name="live" value="0">
+
+        <div class="field">
+            <div id="file" class="dropzone"></div>
+            @if ($errors->has('uploads'))
+                <p class="help is-danger">{{ $errors->first('uploads') }}</p>
+            @endif
+        </div>
+
         <div class="field">
             <p class="control">
                 <label for="live" class="checkbox">
@@ -78,4 +86,8 @@
             <p>Your files may be checked to review</p>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    @include('files.partials._file_upload_js')
 @endsection

@@ -80,4 +80,8 @@ class File extends Model
     public function createApproval (array $approvalProperties)  {
         $this->approvals()->create($approvalProperties);
     }
+
+    public function uploads(){
+        return $this->hasMany(Upload::class);
+    }
 }

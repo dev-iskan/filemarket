@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.5.22"
     },
     "dependencies": {
-        "bulma": "^0.7.2"
+        "bulma": "^0.7.2",
+        "dropzone": "^5.5.1"
     }
 }
