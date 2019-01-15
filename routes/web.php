@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/test', function ()  {
+    dd(auth()->user()->hasRole('admin '));
+});
+
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');

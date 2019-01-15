@@ -20,13 +20,19 @@
                 <div class="navbar-item">
                     <div class="buttons">
                         @if(auth()->check())
-                        <a href="{{route('logout')}}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();" class="button is-primary">
-                            <strong>Log out</strong>
-                        </a>
-                        <a href="{{route('account.index')}}" class="button is-light">
-                            Your profile
-                        </a>
+                            <a href="{{route('logout')}}" onclick="event.preventDefault();
+                                                             document.getElementById('logout-form').submit();" class="button is-primary">
+                                <strong>Log out</strong>
+                            </a>
+                            <a href="{{route('account.index')}}" class="button is-light">
+                                Your profile
+                            </a>
+
+                            @role('admin')
+                                <a href="#" class="nav-item">
+                                    Admin
+                                </a>
+                            @endrole
                         @else
                         <a href="{{route('login')}}" class="button is-primary">
                             <strong>Log in</strong>
