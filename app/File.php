@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\HasApproval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class File extends Model
 {
     use SoftDeletes;
-
+    use HasApproval;
     protected $casts = [
         'live' => 'boolean'
     ];
@@ -67,6 +68,10 @@ class File extends Model
 
     public function needsApproval (array $approvalProperties) {
         if ($this->currentPropertiesDifferToGiven($approvalProperties)) {
+            return true;
+        }
+
+        if ($this->uploads()->unapproved()->count()) {
             return true;
         }
 
