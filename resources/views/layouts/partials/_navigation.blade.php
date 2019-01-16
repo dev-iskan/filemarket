@@ -29,7 +29,7 @@
                             </a>
 
                             @role('admin')
-                                <a href="#" class="nav-item">
+                                <a href="{{route('admin.index')}}" class="button is-light">
                                     Admin
                                 </a>
                             @endrole

@@ -36,3 +36,15 @@ Route::group(['prefix' => '/account', 'middleware'=> ['auth'],  'namespace' => '
 
 Route::post('/{file}/upload', 'Upload\UploadController@store')->name('upload.store');
 Route::delete('/{file}/upload/{upload}', 'Upload\UploadController@destroy')->name('upload.destroy');
+
+Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
+    Route::get('/', 'AdminController@index')->name('admin.index');
+
+    Route::group(['prefix'=> '/files'], function () {
+        Route::group(['prefix'=> '/new'], function () {
+            Route::get('/', 'FileNewController@index')->name('admin.files.new.index');
+            Route::patch('/{file}', 'FileNewController@update')->name('admin.files.new.update');
+            Route::delete('/{file}', 'FileNewController@destroy')->name('admin.files.new.destroy');
+        });
+    });
+});

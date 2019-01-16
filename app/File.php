@@ -89,4 +89,22 @@ class File extends Model
     public function uploads(){
         return $this->hasMany(Upload::class);
     }
+
+    public function approve () {
+        $this->updateToBeVisible();
+        $this->approveAllUploads();
+    }
+
+    public function approveAllUploads () {
+        $this->uploads()->update([
+            'approved' => true
+        ]);
+    }
+
+    public function updateToBeVisible () {
+        $this->update([
+            'live' => true,
+            'approved' => true
+        ]);
+    }
 }
