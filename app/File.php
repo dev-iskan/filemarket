@@ -122,4 +122,14 @@ class File extends Model
     public function deleteUnapprovedUploads () {
         $this->uploads()->unapproved()->delete();
     }
+
+    public function visible () {
+        if (auth()->user()->isAdmin()) {
+            return true;
+        }
+        if (auth()->user()->isTheSameUser($this->user)) {
+            return true;
+        }
+        return $this->live && $this->approved;
+    }
 }
