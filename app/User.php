@@ -39,4 +39,8 @@ class User extends Authenticatable
     public function isTheSameUser (User $user) {
         return $this->id === $user->id;
     }
+
+    public function sales () {
+        return $this->hasMany(Sale::class);
+    }
 }

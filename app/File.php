@@ -132,4 +132,12 @@ class File extends Model
         }
         return $this->live && $this->approved;
     }
+
+    public function sales () {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function calculateCommission () {
+        return (config('filemarket.sales.commission') / 100) * $this->price;
+    }
 }
