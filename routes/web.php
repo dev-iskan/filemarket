@@ -18,9 +18,11 @@ Route::get('/test', function ()  {
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/account/connect', 'Account\MarketplaceConnectController@index')->name('account.connect');
+Route::get('/account/connect/complete', 'Account\MarketplaceConnectController@store')->name('account.complete');
 
 
-Route::group(['prefix' => '/account', 'middleware'=> ['auth'],  'namespace' => 'Account'], function () {
+Route::group(['prefix' => '/account', 'middleware'=> ['auth', 'needs.marketplace'],  'namespace' => 'Account'], function () {
     Route::get('/', 'AccountController@index')->name('account.index');
 
     Route::group(['prefix' => '/files'],  function () {

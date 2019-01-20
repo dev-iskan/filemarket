@@ -34,5 +34,8 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'stripe_connect' => [
+        'key' => env('STRIPE_CONNECT_KEY')
+    ],
 
 ];
