@@ -140,4 +140,12 @@ class File extends Model
     public function calculateCommission () {
         return (config('filemarket.sales.commission') / 100) * $this->price;
     }
+
+    public function matchesSale (Sale $sale) {
+        return $this->sales->contains($sale);
+    }
+
+    public function getUploadList () {
+        return $this->uploads()->approved()->get()->pluck('path')->toArray();
+    }
 }

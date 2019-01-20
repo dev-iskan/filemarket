@@ -2,8 +2,8 @@
 
 @section('content')
     <p>Thanks for downloading <strong>{{$sale->file->title}}</strong> from Filemarket.</p>
-    <p><a href="">Download your file</a></p>
+    <p><a href="{{route('files.download', [$sale->file, $sale])}}">Download your file</a></p>
     <p>Or, copy and paste to your browser: <br>
-        http://
+        {{route('files.download', [$sale->file, $sale])}}
     </p>
 @endsection
