@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Self_;
 
 class Sale extends Model
 {
@@ -24,5 +26,18 @@ class Sale extends Model
 
     public function file () {
         return $this->belongsTo(File::class);
+    }
+
+    public static function lifetimeCommission () {
+        return static::get()->sum('sale_commission');
+    }
+
+    public static function commissionThisMonth () {
+        $now = Carbon::now();
+
+        return static::whereBetween('created_at', [
+            $now->startOfMonth(),
+            $now->copy()->endOfMonth() // copy same value in order to avoid same reference to object
+        ])->get()->sum('sale_commission');
     }
 }

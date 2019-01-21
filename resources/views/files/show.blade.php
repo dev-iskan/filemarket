@@ -15,6 +15,8 @@
 
                 @if($file->isFree())
                     @include('files.partials._checkout_form_free')
+                @else
+                    @include('files.partials._checkout_form')
                 @endif
             </div>
         </div>

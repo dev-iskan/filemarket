@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\HasRoles;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -42,5 +43,17 @@ class User extends Authenticatable
 
     public function sales () {
         return $this->hasMany(Sale::class);
+    }
+
+    public function saleValueOverLifetime () {
+        return $this->sales->sum('sale_price');
+    }
+
+    public function saleValueOverMonth () {
+        $now = Carbon::now();
+        return $this->sales()->whereBetween('created_at', [
+            $now->startOfMonth(),
+            $now->copy()->endOfMonth() // copy same value in order to avoid same reference to object
+        ])->get()->sum('sale_price');
     }
 }

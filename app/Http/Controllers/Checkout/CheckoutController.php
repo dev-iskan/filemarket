@@ -6,6 +6,8 @@ use App\File;
 use App\Http\Requests\Checkout\FreeCheckoutRequest;
 use App\Http\Controllers\Controller;
 use App\Jobs\Checkout\CreateSale;
+use Illuminate\Http\Request;
+use Stripe\Charge;
 
 class CheckoutController extends Controller
 {
@@ -18,5 +20,24 @@ class CheckoutController extends Controller
         dispatch(new CreateSale($file, $request->email));
 
         return back()->withSuccess('We have emailed your download link to you.');
+    }
+
+    public function payment(Request $request, File $file) {
+        try {
+            $charge = Charge::create([
+                'amount' => $file->price * 100,
+                'currency' => 'gbp',
+                'source' => $request->stripeToken,
+                'application_fee' => $file->calculateCommission() * 100
+            ], [
+                'stripe_account' => $file->user->stripe_id
+            ]);
+        } catch (Exception $exception) {
+            return back()->withError('Something went wrong while processing your payment');
+        }
+
+        dispatch(new CreateSale($file, $request->stripeEmail));
+
+        return back()->withSuccess('Payment complete. We have emailed your download link to you.');
     }
 }
